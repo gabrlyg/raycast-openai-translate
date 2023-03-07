@@ -3,7 +3,7 @@
   "name": "openai-translate",
   "title": "OpenAI Translate",
   "description": "Translate with the power of OpenAI GPT-3",
-  "icon": "command-icon.png",
+  "icon": "icon.png",
   "author": "gabrlyg",
   "categories": [
     "Productivity"
@@ -11,6 +11,7 @@
   "license": "MIT",
   "commands": [
     {
+      "icon": "icon.png",
       "name": "index",
       "title": "Translate",
       "description": "Translate with the power of OpenAI GPT-3",
