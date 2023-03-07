@@ -1,6 +1,8 @@
-import { Action, ActionPanel, Form, getPreferenceValues } from '@raycast/api';
-import useOpenAITranslate from './hooks/useOpenAITranslate';
-import { LANGUAGES } from './utils/languages';
+import { Action, ActionPanel, Form, getPreferenceValues, Icon, openCommandPreferences } from '@raycast/api';
+import { LANGUAGES } from '@utils/languages';
+import useOpenAITranslate from '@hooks/useOpenAITranslate';
+import { OpenAiTranslatePreferenceValues } from './types/preferences';
+import getPreference from '@utils/getPreference';
 
 export default function RaycastGPTTranslate() {
   const { data, error, loading, translate } = useOpenAITranslate();
@@ -8,27 +10,31 @@ export default function RaycastGPTTranslate() {
   return (
     <Form
       actions={
-        <ActionPanel title='GPT Translate'>
-          <Action.SubmitForm
-            title='Translate'
-            onSubmit={(values) => {
-              const { text, from, to } = values;
-              // console.log(values);
-              translate({
-                openAiConfig: {
-                  openaiApiKey: getPreferenceValues().openAiApiKey,
-                  model: 'gpt-3.5-turbo',
-                  temperature: 0,
-                  top_p: 1,
-                  frequency_penalty: 1,
-                  presence_penalty: 1,
-                },
-                text,
-                from,
-                to,
-              });
-            }}
-          />
+        <ActionPanel title='OpenAI Translate'>
+          <ActionPanel.Section>
+            <Action.SubmitForm
+              title='Translate'
+              onSubmit={(values) => {
+                const { text, from, to } = values;
+                translate({
+                  openAiConfig: {
+                    openaiApiKey: getPreferenceValues<OpenAiTranslatePreferenceValues>().openAiApiKey,
+                    model: getPreference('model'),
+                    temperature: parseFloat(getPreference('temperature')),
+                    top_p: parseFloat(getPreference('top_p')),
+                    frequency_penalty: parseFloat(getPreference('frequency_penalty')),
+                    presence_penalty: parseFloat(getPreference('presence_penalty')),
+                  },
+                  text,
+                  from,
+                  to,
+                });
+              }}
+            />
+          </ActionPanel.Section>
+          <ActionPanel.Section>
+            <Action title='Change API Key' icon={Icon.Key} onAction={() => openCommandPreferences()} />
+          </ActionPanel.Section>
         </ActionPanel>
       }
     >

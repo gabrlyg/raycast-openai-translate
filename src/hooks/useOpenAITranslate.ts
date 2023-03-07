@@ -5,7 +5,7 @@ import buildUserPrompt, { SYS_PROMPT } from '@utils/prompts';
 export interface TranslateQuery {
   openAiConfig: {
     openaiApiKey: string;
-    model: 'gpt-3.5-turbo' | 'gpt-3.5-turbo-0301';
+    model: string;
     temperature: number;
     top_p: number;
     frequency_penalty: number;
