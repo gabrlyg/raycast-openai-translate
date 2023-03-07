@@ -1,6 +1,8 @@
 # OpenAI Translate
 
-![Icon](assets/icon.png)
+<p align="center">
+  <img src="./assets/icon.png" alt="" height="128" width="128" />
+</p>
 
 Translate with the power of OpenAI GPT-3.
 
