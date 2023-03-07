@@ -1,5 +1,7 @@
 # OpenAI Translate
 
+![Icon](assets/icon.png)
+
 Translate with the power of OpenAI GPT-3.
 
 ## TODO:
