@@ -17,13 +17,15 @@ const objectValuesToString = (object: Parameters) => {
   for (const [key, value] of Object.entries(object)) {
     objectWithStringValues[key] = `${value}`;
   }
+  console.log('params in string: ', objectWithStringValues);
   return objectWithStringValues;
 };
 
 const Configuration = () => {
   const [config, setConfig] = useState<Parameters>({} as Parameters);
   const [isLoading, setIsLoading] = useState(true);
-  const { handleSubmit, itemProps } = useForm<ConfigurationFormValues>({
+
+  const { handleSubmit, itemProps, reset } = useForm<ConfigurationFormValues>({
     onSubmit: async (values) => {
       const newConfig: Parameters = {
         model: values.model,
@@ -73,6 +75,10 @@ const Configuration = () => {
       isMounted = false;
     };
   }, []);
+
+  useEffect(() => {
+    reset(objectValuesToString(config));
+  }, [config]);
 
   return (
     <Form

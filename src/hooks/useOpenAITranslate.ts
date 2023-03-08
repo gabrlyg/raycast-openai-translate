@@ -23,10 +23,10 @@ export interface Response {
 const useOpenAITranslate = () => {
   const [data, setData] = useState<Response>({});
   const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const translate = async ({ openAiConfig, ...translateQuery }: TranslateQuery) => {
-    setLoading(true);
+    setIsLoading(true);
     try {
       const configuration = new Configuration({
         apiKey: openAiConfig.openaiApiKey,
@@ -39,18 +39,18 @@ const useOpenAITranslate = () => {
         messages: [SYS_PROMPT, userPrompt],
         // stream: true,
       });
-      setLoading(false);
+      setIsLoading(false);
       setData({
         content: completion.data.choices[0].message?.content,
         finishReason: completion.data.choices[0].finish_reason,
       });
     } catch (error) {
       console.error('error requesting: ', error);
-      setError(`Error requesting OpenAIApi: ${error}`);
+      setError(`${error}`);
     }
   };
 
-  return { data, error, loading, translate };
+  return { data, error, isLoading, translate };
 };
 
 export default useOpenAITranslate;

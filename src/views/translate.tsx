@@ -5,16 +5,44 @@ import {
   getPreferenceValues,
   Icon,
   openCommandPreferences,
+  showToast,
+  Toast,
   useNavigation,
 } from '@raycast/api';
 import { LANGUAGES } from '@utils/languages';
 import useOpenAITranslate from '@hooks/useOpenAITranslate';
 import Configuration from '@views/configuration';
 import { getAllParamsFromLocalStorage } from '@utils/parameters';
+import { useEffect, useState } from 'react';
 
 export default function Translate() {
   const { push } = useNavigation();
-  const { data, error, loading, translate } = useOpenAITranslate();
+  const { data, error, isLoading, translate } = useOpenAITranslate();
+  const [isFirstRender, setIsFirstRender] = useState(true);
+
+  useEffect(() => {
+    setIsFirstRender(false);
+  }, []);
+
+  useEffect(() => {
+    if (error) {
+      showToast({
+        title: 'Error occurred when translating with OpenAI',
+        message: error,
+        style: Toast.Style.Failure,
+      });
+    } else if (isLoading) {
+      showToast({
+        title: 'Translating...',
+        style: Toast.Style.Animated,
+      });
+    } else if (!isFirstRender && !isLoading) {
+      showToast({
+        title: 'Succeeded',
+        style: Toast.Style.Success,
+      });
+    }
+  }, [isLoading, error]);
 
   return (
     <Form
@@ -26,16 +54,11 @@ export default function Translate() {
               icon={Icon.Globe}
               onSubmit={async (values) => {
                 const { text, from, to } = values;
-                const { model, temperature, top_p, presence_penalty, frequency_penalty } =
-                  await getAllParamsFromLocalStorage();
+                const parameters = await getAllParamsFromLocalStorage();
                 translate({
                   openAiConfig: {
                     openaiApiKey: getPreferenceValues().openAiApiKey,
-                    model,
-                    temperature,
-                    top_p,
-                    presence_penalty,
-                    frequency_penalty,
+                    ...parameters,
                   },
                   text,
                   from,
@@ -49,7 +72,7 @@ export default function Translate() {
               title='Change API Key'
               icon={Icon.Key}
               onAction={() => openCommandPreferences()}
-              shortcut={{ modifiers: ['cmd'], key: 'k' }}
+              shortcut={{ modifiers: ['cmd', 'shift'], key: 'k' }}
             />
           </ActionPanel.Section>
           <Action
@@ -63,16 +86,15 @@ export default function Translate() {
     >
       <Form.TextArea id='text' title='Text' autoFocus={true} />
       {/* TODO: add token count here */}
-      <Form.Dropdown id='from' title='From'>
+      <Form.Dropdown id='from' title='From' storeValue={true}>
         {renderLanguageList()}
       </Form.Dropdown>
-      <Form.Dropdown id='to' title='To'>
+      <Form.Dropdown id='to' title='To' storeValue={true}>
         {renderLanguageList(true)}
       </Form.Dropdown>
       <Form.TextArea
         id='translation'
-        value={loading ? 'Translating...' : data.content || ''}
-        error={error}
+        value={data.content?.trim() || ''}
         title='Translation'
         // eslint-disable-next-line @typescript-eslint/no-empty-function
         onChange={() => {}}
