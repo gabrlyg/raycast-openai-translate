@@ -1,12 +1,62 @@
-import { Action, ActionPanel, Form, Icon } from '@raycast/api';
+import { useEffect, useState } from 'react';
+import { Action, ActionPanel, Form, Icon, showToast, Toast } from '@raycast/api';
+import { useForm } from '@raycast/utils';
 
 import { getAllParamsFromLocalStorage, PARAMETERS, Parameters, saveParamsToLocalStorage } from '@utils/parameters';
-import { useEffect, useState } from 'react';
+
+interface ConfigurationFormValues {
+  model: string;
+  temperature: string;
+  top_p: string;
+  presence_penalty: string;
+  frequency_penalty: string;
+}
+
+const objectValuesToString = (object: Parameters) => {
+  const objectWithStringValues: { [key: string]: string } = {};
+  for (const [key, value] of Object.entries(object)) {
+    objectWithStringValues[key] = `${value}`;
+  }
+  return objectWithStringValues;
+};
 
 const Configuration = () => {
   const [config, setConfig] = useState<Parameters>({} as Parameters);
   const [isLoading, setIsLoading] = useState(true);
-  const { model, temperature, top_p, presence_penalty, frequency_penalty } = config;
+  const { handleSubmit, itemProps } = useForm<ConfigurationFormValues>({
+    onSubmit: async (values) => {
+      const newConfig: Parameters = {
+        model: values.model,
+        temperature: parseFloat(values.temperature),
+        top_p: parseFloat(values.top_p),
+        presence_penalty: parseFloat(values.presence_penalty),
+        frequency_penalty: parseFloat(values.frequency_penalty),
+      };
+      try {
+        showToast({
+          title: 'Saving configurations',
+          style: Toast.Style.Animated,
+        });
+        await saveParamsToLocalStorage(newConfig);
+        showToast({
+          title: 'Successfully saved configurations',
+          style: Toast.Style.Success,
+        });
+      } catch (error) {
+        showToast({
+          title: 'Error occurred when saving configurations',
+          style: Toast.Style.Failure,
+        });
+      }
+    },
+    initialValues: objectValuesToString(config),
+    validation: {
+      temperature: PARAMETERS.temperature.validation,
+      top_p: PARAMETERS.top_p.validation,
+      presence_penalty: PARAMETERS.presence_penalty.validation,
+      frequency_penalty: PARAMETERS.frequency_penalty.validation,
+    },
+  });
 
   useEffect(() => {
     let isMounted = true;
@@ -29,44 +79,34 @@ const Configuration = () => {
       isLoading={isLoading}
       actions={
         <ActionPanel>
-          <Action.SubmitForm
-            onSubmit={(values) => {
-              saveParamsToLocalStorage(values as Parameters);
-            }}
-            title='Save Configuration'
-            icon={Icon.CheckCircle}
-          />
+          <Action.SubmitForm onSubmit={handleSubmit} title='Save Configuration' icon={Icon.CheckCircle} />
         </ActionPanel>
       }
     >
-      <Form.Dropdown id='model' title='Model' value={model} storeValue={true} info={PARAMETERS.model.description}>
+      <Form.Dropdown title='Model' info={PARAMETERS.model.description} {...itemProps.model}>
         {PARAMETERS.model.data.map((m) => (
           <Form.Dropdown.Item value={m} title={m} key={m} />
         ))}
       </Form.Dropdown>
       <Form.TextField
-        id='temperature'
         title='Temperature'
-        value={`${temperature}`}
         info={`${PARAMETERS.temperature.description}\n\nDefault: ${PARAMETERS.temperature.default}`}
+        {...itemProps.temperature}
       />
       <Form.TextField
-        id='top_p'
         title='top_p'
-        value={`${top_p}`}
         info={`${PARAMETERS.top_p.description}\n\nDefault: ${PARAMETERS.top_p.default}`}
+        {...itemProps.top_p}
       />
       <Form.TextField
-        id='presence_penalty'
         title='Presence Penalty'
-        value={`${presence_penalty}`}
         info={`${PARAMETERS.presence_penalty.description}\n\nDefault: ${PARAMETERS.presence_penalty.default}`}
+        {...itemProps.presence_penalty}
       />
       <Form.TextField
-        id='frequency_penalty'
         title='Frequency Penalty'
-        value={`${frequency_penalty}`}
         info={`${PARAMETERS.frequency_penalty.description}\n\nDefault: ${PARAMETERS.frequency_penalty.default}`}
+        {...itemProps.frequency_penalty}
       />
     </Form>
   );
