@@ -15,6 +15,7 @@
     "resolveJsonModule": true,
     "paths": {
       "@components/*": ["./src/components/*"],
+      "@providers/*": ["./src/providers/*"],
       "@hooks/*": ["./src/hooks/*"],
       "@views/*": ["./src/views/*"],
       "@utils/*": ["./src/utils/*"]
