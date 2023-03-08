@@ -1,4 +1,4 @@
-import { getPreferenceValues, LocalStorage } from '@raycast/api';
+import { LocalStorage } from '@raycast/api';
 
 export interface Parameters {
   model: string;
