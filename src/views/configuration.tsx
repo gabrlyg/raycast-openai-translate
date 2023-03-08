@@ -17,7 +17,6 @@ const objectValuesToString = (object: Parameters) => {
   for (const [key, value] of Object.entries(object)) {
     objectWithStringValues[key] = `${value}`;
   }
-  console.log('params in string: ', objectWithStringValues);
   return objectWithStringValues;
 };
 

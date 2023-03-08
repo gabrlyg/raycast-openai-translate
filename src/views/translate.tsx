@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import {
   Action,
   ActionPanel,
@@ -13,7 +14,6 @@ import { LANGUAGES } from '@utils/languages';
 import useOpenAITranslate from '@hooks/useOpenAITranslate';
 import Configuration from '@views/configuration';
 import { getAllParamsFromLocalStorage } from '@utils/parameters';
-import { useEffect, useState } from 'react';
 
 export default function Translate() {
   const { push } = useNavigation();
