@@ -4,13 +4,26 @@
   <img src="./assets/icon.png" alt="" height="128" width="128" />
 </p>
 
-Translate with the power of OpenAI GPT-3.
+Translate with the power of OpenAI GPT.
 
-## TODO:
+## Usage
 
-- [ ] Implement Settings view
-  - [ ] Change OpenAI API Key
-  - [ ] Change model and parameters
-- [ ] Implement token count
-- [ ] Implement persistence of translate options (from and to)
-- [ ] Implement translation history
+### OpenAI API Key
+
+You will be asked for an OpenAI API key before you can start using this extension. To get your API key, visit [Account API Keys - OpenAI](https://platform.openai.com/account/api-keys).
+
+### Actions
+
+| Action               | Shortcut        | Description                                                       |
+| -------------------- | --------------- | ----------------------------------------------------------------- |
+| Translate            | `⌘` `↩`         | Translate your input text with OpenAI GPT                         |
+| Copy to clipboard    | `⌘` `Shift` `C` | Copy the translation to clipboard, if a translation is available. |
+| Change API Key       | `⌘` `Shift` `K` | Change your OpenAI API key.                                       |
+| Configure Parameters | `⌘` `Shift` `,` | Configure OpenAI parameters.                                      |
+
+## Credits
+
+Inspired by:
+
+- [`openai-translator`](https://github.com/yetone/openai-translator) by [yetone](https://github.com/yetone) - Chrome extension for word translation based on ChatGPT API.
+- [`openai-translator`](https://github.com/LanceMoe/openai-translator) by [LanceMoe](https://github.com/LanceMoe) - A translator that uses OpanAI.
