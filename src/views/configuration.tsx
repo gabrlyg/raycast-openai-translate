@@ -70,7 +70,6 @@ const Configuration = () => {
     };
     setConfigFromParams();
     return () => {
-      console.log('configuration unmounting');
       isMounted = false;
     };
   }, []);

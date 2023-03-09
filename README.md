@@ -17,7 +17,7 @@ You will be asked for an OpenAI API key before you can start using this extensio
 | Action               | Shortcut        | Description                                                       |
 | -------------------- | --------------- | ----------------------------------------------------------------- |
 | Translate            | `⌘` `↩`         | Translate your input text with OpenAI GPT                         |
-| Copy to Clipboard    | `⌘` `Shift` `C` | Copy the translation to clipboard, if a translation is available. |
+| Copy to Clipboard    | `⌘` `Shift` `↩` | Copy the translation to clipboard, if a translation is available. |
 | Change API Key       | `⌘` `Shift` `K` | Change your OpenAI API key.                                       |
 | Configure Parameters | `⌘` `Shift` `,` | Configure OpenAI parameters.                                      |
 

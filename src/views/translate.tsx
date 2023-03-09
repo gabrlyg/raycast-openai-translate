@@ -66,6 +66,7 @@ export default function Translate() {
                 });
               }}
             />
+            <Action.CopyToClipboard content={data.content?.trim() || ''} />
           </ActionPanel.Section>
           <ActionPanel.Section>
             <Action
