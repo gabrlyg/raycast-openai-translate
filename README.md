@@ -4,7 +4,7 @@
   <img src="./assets/icon.png" alt="" height="128" width="128" />
 </p>
 
-Translate with the power of OpenAI GPT.
+Translate at your finger tips, with the power of OpenAI GPT.
 
 ## Usage
 

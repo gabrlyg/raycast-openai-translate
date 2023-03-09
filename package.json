@@ -2,7 +2,7 @@
   "$schema": "https://www.raycast.com/schemas/extension.json",
   "name": "openai-translate",
   "title": "OpenAI Translate",
-  "description": "Translate with the power of OpenAI GPT-3",
+  "description": "Translate at your finger tips, with the power of OpenAI GPT",
   "icon": "icon.png",
   "author": "gabrlyg",
   "categories": [
@@ -23,7 +23,7 @@
       "icon": "icon.png",
       "name": "index",
       "title": "Translate",
-      "description": "Translate with the power of OpenAI GPT-3",
+      "description": "Translate with the power of OpenAI GPT",
       "mode": "view"
     }
   ],
