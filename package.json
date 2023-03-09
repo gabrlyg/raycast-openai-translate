@@ -12,7 +12,7 @@
     {
       "name": "openAiApiKey",
       "title": "OpenAI API Key",
-      "description": "API Key is used to authenticate with OpenAI API",
+      "description": "API key is used to authenticate with OpenAI API. Please reload the extension if you changed your API key.",
       "type": "password",
       "required": true
     }
@@ -30,6 +30,7 @@
   "dependencies": {
     "@raycast/api": "^1.48.5",
     "@raycast/utils": "^1.5.2",
+    "axios": "^1.3.4",
     "openai": "^3.2.1"
   },
   "devDependencies": {

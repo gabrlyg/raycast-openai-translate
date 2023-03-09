@@ -23,9 +23,10 @@ const penaltyValidation = (type: 'presence_penalty' | 'frequency_penalty') => {
 export const PARAMETERS = {
   model: {
     title: 'Model',
-    description: 'ID of the model to use',
+    description:
+      "gpt-3.5-turbo: Most capable GPT-3.5 model and optimized for chat at 1/10th the cost of `text-davinci-003`. Will be updated with OpenAI's latest model iteration.\n\ngpt-3.5-turbo-0301: Snapshot of `gpt-3.5-turbo` from March 1st 2023. Unlike `gpt-3.5-turbo`, this model will not receive updates, and will only be supported for a three month period ending on June 1st 2023.\n\ntext-davinci-003: Can do any language task with better quality, longer output, and consistent instruction-following than the curie, babbage, or ada models.\n\ntext-davinci-002: Similar capabilities to `text-davinci-003` but trained with supervised fine-tuning instead of reinforcement learning",
     required: false,
-    data: ['gpt-3.5-turbo', 'gpt-3.5-turbo-0301'],
+    data: ['gpt-3.5-turbo', 'gpt-3.5-turbo-0301', 'text-davinci-003', 'text-davinci-002'],
     default: 'gpt-3.5-turbo',
   },
   temperature: {
